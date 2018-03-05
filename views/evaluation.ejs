@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Evaluations</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#a80000">
+    <img src="/images/alfaysal.jpg" width="30" height="30" class="d-inline-block align-top" alt="F">
+    &nbsp &nbsp
+    <a class="navbar-brand" href="#"><font color="white">Alfaysal Tourism</font></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/home"><font color="white">Home</font><span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/places"><font color="white">Tourism Monuments</font></a>
+            <a class="nav-item nav-link" href="/reservation"><font color="white">Reservations</font></a>
+            <a class="nav-item nav-link" href="/opinions"><font color="white">Opinions</font></a>
+            <a class="nav-item nav-link" href="/evaluation"><font color="white">Evaluation</font></a>
+        </div>
+    </div>
+</nav>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Evaluations</h1>
+        <p class="lead">To provide you with better services, please write down your rating to us with the reason for the
+            rating
+        </p>
+    </div>
+</div>
+
+<div class="container" id="root">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-7">
+            <button class="btn btn-secondary" @click="openAddModal">Add Your Evaluation</button>
+        </div>
+    </div>
+    <br>
+    <!-- Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Your Evaluation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>New Evaluation</label>
+                        <input v-model="newEvaluation.Evaluation" type="text" class="form-control"
+                               placeholder="Enter your Evaluation">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>The Reason</label>
+                        <input v-model="newEvaluation.reason" type="text" class="form-control"
+                               placeholder="Enter The Reason of your Evaluation">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button @click="addEvaluation" type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Your Evaluation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>New Evaluation</label>
+                        <input v-model="editEvaluation.Evaluation" type="text" class="form-control"
+                               placeholder="Enter your Evaluation">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>The Reason</label>
+                        <input v-model="editEvaluation.reason" type="text" class="form-control"
+                               placeholder="Enter The Reason of your Evaluation">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button @click="saveEvaluation" type="button" class="btn btn-danger">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-8">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead style="background-color:#a80000">
+                        <tr>
+                            <th><font color="white">No.</font></th>
+                            <th><font color="white">Evaluation</font></th>
+                            <th><font color="white">Reason</font></th>
+                            <th><font color="white">Actions</font></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(evaluation, index) in evaluations">
+                            <td>{{index + 1}}</td>
+                            <td>{{evaluation.Evaluation}}</td>
+                            <td>{{evaluation.reason}}</td>
+                            <td>
+                                <button @click="removeEvaluation(evaluation._id)" class="btn btn-danger btn-sm">Delete
+                                </button>
+                                <button @click="openEditModal(evaluation)" class="btn btn-secondary btn-sm">Edit
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    function getEvaluation() {
+        axios.get('/api/evaluation').then(function (response) {
+            app.evaluations = response.data;
+        });
+    }
+
+    var app = new Vue({
+        el: "#root",
+        data: {
+            evaluations: [],
+            newEvaluation: {
+                Evaluation: "",
+                reason: ""
+            },
+            editEvaluation: {
+                Evaluation: "",
+                reason: ""
+            },
+        },
+        methods: {
+            openAddModal: function () {
+                $('#addModal').modal('show')
+            },
+            openEditModal: function (evaluation) {
+                this.editEvaluation = evaluation
+                $('#editModal').modal('show')
+            },
+            addEvaluation: function () {
+                axios.post('/api/evaluation', {evaluation: app.newEvaluation}).then(function (response) {
+                    if (response.data.isSuccess) {
+                        getEvaluation()
+                        $('#addModal').modal('hide')
+                    }
+                }).catch(function (error) {
+                });
+            },
+            saveEvaluation: function () {
+                axios.put('/api/evaluation', {evaluation: this.editEvaluation}).then(function (response) {
+                    if (response.data.isSuccess) {
+                        $('#editModal').modal('hide')
+                        getEvaluation();
+                    }
+                })
+            },
+            removeEvaluation: function (id) {
+                axios.delete('/api/evaluation', {
+                    params: {
+                        id: id
+                    }
+                }).then(function (response) {
+                    if (response.data.isSuccess) {
+                        getEvaluation()
+                    }
+                })
+            },
+        },
+        mounted: function () {
+            getEvaluation()
+        }
+    })
+</script>
+
+</body>
+</html>

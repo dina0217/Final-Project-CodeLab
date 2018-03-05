@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Reservation</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#a80000">
+    <img src="/images/alfaysal.jpg" width="30" height="30" class="d-inline-block align-top" alt="F">
+    &nbsp &nbsp
+    <a class="navbar-brand" href="#"><font color="white">Alfaysal Tourism</font></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/home"><font color="white">Home</font><span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/places"><font color="white">Tourism Monuments</font></a>
+            <a class="nav-item nav-link" href="/reservation"><font color="white">Reservations</font></a>
+            <a class="nav-item nav-link" href="/opinions"><font color="white">Opinions</font></a>
+            <a class="nav-item nav-link" href="/evaluation"><font color="white">Evaluation</font></a>
+        </div>
+    </div>
+</nav>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Registration Form</h1>
+        <p class="lead">This is a Registration Form for Tourism Monuments in Turkey. If you would like to visit one of
+            them, complete the form.
+        </p>
+    </div>
+</div>
+
+<div class="cantainer" id="root">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Name</label>
+                    <input v-model="form.name" type="text" class="form-control" id="inputEmail4"
+                           placeholder="Enter Your Name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Phone Number</label>
+                    <input v-model="form.number" type="text" class="form-control" id="inputPassword4"
+                           placeholder="+9078888">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Email</label>
+                <input v-model="form.email" type="email" class="form-control" id="inputAddress"
+                       placeholder="turkey@alfaysal.com">
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2">Name Of Tourism Monument</label>
+                <input v-model="form.tourism" type="text" class="form-control" id="inputAddress2"
+                       placeholder="Jawahir Mall, Eminönü..etc">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Number of companions</label>
+                    <input v-model="form.compan" type="text" class="form-control" id="inputCity">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Trip Type</label>
+                    <select v-model="form.trip" id="inputState" class="form-control">
+                        <option>Tourism</option>
+                        <option>Work</option>
+                        <option>Trade</option>
+                        <option>Investment</option>
+                    </select>
+                </div>
+            </div>
+            <button @click="addForm" type="submit" class="btn btn-danger">Submit</button>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    var app = new Vue({
+        el: "#root",
+        data: {
+            form: {
+                name: "",
+                number: "",
+                email: "",
+                tourism: "",
+                compan: "",
+                trip: ""
+            },
+            forms: []
+        },
+        methods: {
+            addForm: function () {
+
+                axios.post('/reservation', {
+                    form: this.form
+                }).then(function (response) {
+                    alert(response.data)
+                })
+                window.location.reload()
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

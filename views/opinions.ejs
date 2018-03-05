@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Opinions</title>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#a80000">
+    <img src="/images/alfaysal.jpg" width="30" height="30" class="d-inline-block align-top" alt="F">
+    &nbsp &nbsp
+    <a class="navbar-brand" href="#"><font color="white">Alfaysal Tourism</font></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/home"><font color="white">Home</font><span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/places"><font color="white">Tourism Monuments</font></a>
+            <a class="nav-item nav-link" href="/reservation"><font color="white">Reservations</font></a>
+            <a class="nav-item nav-link" href="/opinions"><font color="white">Opinions</font></a>
+            <a class="nav-item nav-link" href="/evaluation"><font color="white">Evaluation</font></a>
+        </div>
+    </div>
+</nav>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Opinions</h1>
+        <p class="lead">If you have any questions or opinions about our company and our programs, please write them and
+            we will be happy to provide services to you.
+
+        </p>
+    </div>
+</div>
+<div class="container" id="root">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Email</label>
+                    <input v-model="newEmail" type="email" class="form-control" id="exampleFormControlInput1"
+                           placeholder="turkey@alfaysal.com">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Your Opinion</label>
+                    <textarea v-model="newOpinion" placeholder="Whrite Here" class="form-control"
+                              id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <button @click="addOpinion" type="button" class="btn btn-danger">Add</button>
+
+            </form>
+            <br>
+
+            <div v-for="(opinion,i) in opinions" class="card">
+                <div class="card-header">
+                    {{opinion.e}}
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>{{opinion.o}}</p>
+                        <button @click="removeOpinion(i)" type="button" class="btn btn-danger btn-group-sm float-right">
+                            Delete
+                        </button>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    var app = new Vue({
+        el: "#root",
+        data: {
+            newEmail: "",
+            newOpinion: "",
+            opinions: []
+        },
+        methods: {
+            addOpinion: function () {
+                if (this.newOpinion == "" || this.newEmail == "") {
+                    alert("Can't insert an empty field");
+                } else {
+
+                    var opinion = {e: this.newEmail, o: this.newOpinion};
+                    this.opinions.push(opinion)
+                    this.newOpinion = '';
+                }
+
+
+            },
+
+            removeOpinion: function (index) {
+                this.opinions.splice(index, 1)
+            },
+        },
+
+    });
+
+</script>
+</body>
+</html>
